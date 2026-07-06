@@ -1,0 +1,6 @@
+.dockerignore
+npm-debug.log
+.scannerwork
+.env*
+Dockerfile*
+.git*
