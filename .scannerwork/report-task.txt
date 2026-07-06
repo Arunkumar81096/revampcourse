@@ -1,0 +1,6 @@
+projectKey=Revamp_assignment
+serverUrl=http://localhost:9000
+serverVersion=26.6.0.123539
+dashboardUrl=http://localhost:9000/dashboard?id=Revamp_assignment
+ceTaskId=4f8fd169-60a3-49d1-b3a6-bd7fe7191428
+ceTaskUrl=http://localhost:9000/api/ce/task?id=4f8fd169-60a3-49d1-b3a6-bd7fe7191428
