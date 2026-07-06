@@ -3,8 +3,8 @@ on :
   workflow_dispatch: 
 jobs :
   demo_check :
-    runs on : ubuntu-latest
+    runs-on : ubuntu-latest
+    
     steps :
-       - name : demo pipeline check
-       run : echo "demo pipeline check"
-       bash : sh
+      - name : demo pipeline check
+        run : echo "demo pipeline check"
