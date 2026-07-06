@@ -1,4 +1,4 @@
-name : demo-action-pipeline
+name : demo action pipeline
 on : 
   workflow_dispatch: 
 jobs :
