@@ -1,0 +1,12 @@
+name : pull pipeline
+on:
+     pull_request:
+       branches : ["main"]
+jobs:
+     demo:
+      runs-on : ubuntu-latest
+      steps:
+        - name : demo pull check
+          run : |
+            echo "test sample run"
+            exit 1

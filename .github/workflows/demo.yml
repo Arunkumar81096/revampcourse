@@ -1,10 +1,11 @@
-name : demo action pipeline
-on : 
+name : demo-pipeline
+
+on :
   workflow_dispatch: 
-jobs :
-  demo_check :
+
+jobs:
+  demo:
     runs-on : ubuntu-latest
-    
-    steps :
+    steps:
       - name : demo pipeline check
         run : echo "demo pipeline check"
