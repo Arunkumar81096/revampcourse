@@ -8,9 +8,9 @@ jobs:
       runs-on : [self-hosted,Linux]
       steps:
         - name: clone-code
-          uses: actions/checkout@v7
+          uses: actions/checkout@v4
         - name: sonarqube scan 
-          uses: sonarsource/sonarqube-scan-action@v8
+          uses: sonarsource/sonarqube-scan-action@v3
           with:
            args: >
              -Dsonar.projectKey=Revamp_assignment
