@@ -1,0 +1,14 @@
+name : Demo-run-application
+on:
+     push:
+       branches: ["main"]
+jobs:
+     demo:
+        runs-on : [self-hosted, Linux]
+        steps:
+          - name : clone code 
+            uses: actions/checkout@v7
+          - name : install dependencies 
+            run : npm install
+          - name : run application 
+            run : node app.js
