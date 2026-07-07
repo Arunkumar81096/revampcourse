@@ -4,7 +4,7 @@ on:
        branches : ["main"]
 jobs:
      demo:
-      runs-on : ubuntu-latest
+      runs-on : [self-hosted,Linux]
       steps:
         - name : demo pull check
           run : echo "test sample run"
