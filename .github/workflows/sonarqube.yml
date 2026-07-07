@@ -14,8 +14,7 @@ jobs:
           uses: sonarsource/sonarqube-scan-action@v3
           with:
            args: >
-             -sonar.projectKey=Revamp_assignment
-             -sonar.sources=.
-             -sonar.host.url=http://localhost:9000
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+             -Dsonar.projectKey=Revamp_assignment
+             -Dsonar.sources=.
+             -Dsonar.host.url=${{vars.SONAR_HOST_URL}}
+             -Dsonar.login-${{secrets.SONAR_TOKEN}}
