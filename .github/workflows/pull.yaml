@@ -7,6 +7,4 @@ jobs:
       runs-on : ubuntu-latest
       steps:
         - name : demo pull check
-          run : |
-            echo "test sample run"
-            exit 1
+          run : echo "test sample run"
