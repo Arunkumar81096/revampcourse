@@ -17,6 +17,7 @@ jobs:
           - name: run application 
             run: |
                node app.js &
+               sleep 3
                curl http://localhost:8080
                curl http://localhost:8080/health
                pkill -f "node app.js"
