@@ -8,7 +8,16 @@ jobs:
         steps:
           - name : clone code 
             uses: actions/checkout@v7
-          - name : install dependencies 
-            run : npm install
-          - name : run application 
-            run : node app.js &
+          - name: node-install
+            uses: actions/setup-node@v6
+            with:
+               node-version: 24
+          - name: install_dependencies
+            run: npm install 
+          - name: run application 
+            run: |
+               node app.js
+               sleep 5
+               curl http://localhost:8080
+               curl http://localhost:8080/health
+               pkill -f "node app.js"
