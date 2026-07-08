@@ -16,6 +16,5 @@ jobs:
            args: >
              -Dsonar.projectKey=Revamp_assignment
              -Dsonar.sources=.
-             -Dsonar.host.url=http://localhost:9000
-          env:
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+             -Dsonar.host.url=${{vars.SONAR_HOST_URL}}
+             -Dsonar.login-${{secrets.SONAR_TOKEN}}
