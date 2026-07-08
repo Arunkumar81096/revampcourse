@@ -1,17 +1,17 @@
 name: sonarqube-test
 on:
-    workflow_dispatch:
+  workflow_dispatch:
 jobs:
-    node:
-      runs-on : [self-hosted, Linux, X64]
-      steps:
-        - name: clone-code
-          uses: actions/checkout@v4
+  node:
+    runs-on : [self-hosted, Linux, X64]
+    steps:
+     - name: clone-code
+       uses: actions/checkout@v4
           
-        - name: sonarqube scan 
-          uses: sonarsource/sonarqube-scan-action@v3
-          with:
-           args: >
+     - name: sonarqube scan 
+       uses: sonarsource/sonarqube-scan-action@v3
+       with:
+         args: >
               -Dsonar.projectKey=Revamp_assignment \
               -Dsonar.sources=. \
               -Dsonar.host.url=http://54.80.169.71:9000 \
