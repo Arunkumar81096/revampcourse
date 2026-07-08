@@ -5,7 +5,7 @@ on:
     workflow_dispatch:
 jobs:
     node:
-      runs-on : [self-hosted, Linux]
+      runs-on : [self-hosted, Linux, X64]
       steps:
         - name: clone-code
           uses: actions/checkout@v4
