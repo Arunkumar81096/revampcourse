@@ -1,21 +1,27 @@
-name: sonarqube-test
-on:
-  pull_request:
-    branches: ["main"]
+name: CI pipeline
+
+on: 
   workflow_dispatch:
+  push:
+    branches: main
+  pull_request:
+    branches: main
 
 jobs:
-  node:
-    runs-on: [self-hosted, Linux, X64]
+  sonar:
+    runs-on: [self-hosted, Linux]
+
     steps:
-      - name: clone-code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: sonarqube scan 
-        uses: sonarsource/sonarqube-scan-action@v3
+      - name: SonarQube analysis
+        uses: SonarSource/sonarqube-scan-action@v4
         with:
           args: >
-            -Dsonar.projectKey=Revamp_assignment
+            -Dsonar.projectKey=NodeJS_App
             -Dsonar.sources=.
-            -Dsonar.host.url=http://172.31.36.0:9000
-            -Dsonar.token=sqp_21ae70775fe7bc39cf4cc5c1144f0568c8799aa4
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
