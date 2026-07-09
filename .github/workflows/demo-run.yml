@@ -1,7 +1,6 @@
 name : Demo-run-application
 on:
-     push:
-       branches: ["main"]
+     workflow_dispatch: 
 jobs:
      demo:
         runs-on : [self-hosted, Linux]

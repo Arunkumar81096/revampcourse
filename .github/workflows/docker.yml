@@ -1,0 +1,32 @@
+name: docker-push
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  node:
+    runs-on: [self-hosted, ubuntu-runner]
+    steps:
+      - name: clone-code
+        uses: actions/checkout@v4
+
+      - name: login to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -f Dockerfile -t dockerfile .
+
+      - name: Tag and Push Docker image
+        run: |
+          SHORT_SHA=${GITHUB_SHA::7}
+          IMAGE_NAME="${{ vars.DOCKERHUB_USERNAME }}/ak81096"
+          
+          echo "Tagging image with tag: $SHORT_SHA"
+          docker tag dockerfile $IMAGE_NAME:$SHORT_SHA
+          
+          echo "Pushing image to Docker Hub..."
+          docker push $IMAGE_NAME:$SHORT_SHA
