@@ -19,9 +19,10 @@ jobs:
 
       - name: Tag, build , Push Docker image
         run: |
-          docker build -t nodeapplication -f Dockerfile
+          
           SHORT_SHA=${GITHUB_SHA::7}
           IMAGE_NAME="${{ vars.DOCKERHUB_USERNAME }}/ak81096"
+          docker build -t $IMAGE_NAME:$SHORT_SHA -f Dockerfile .
           
           echo "Tagging image with tag: $SHORT_SHA"
           docker tag dockerfile $IMAGE_NAME:$SHORT_SHA
