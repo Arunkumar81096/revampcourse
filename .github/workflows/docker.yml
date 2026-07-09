@@ -17,11 +17,9 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker image
-        run: docker build -t nodeapplication -f Dockerfile
-
-      - name: Tag and Push Docker image
+      - name: Tag, build , Push Docker image
         run: |
+          docker build -t nodeapplication -f Dockerfile
           SHORT_SHA=${GITHUB_SHA::7}
           IMAGE_NAME="${{ vars.DOCKERHUB_USERNAME }}/ak81096"
           
