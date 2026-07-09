@@ -9,7 +9,7 @@ on:
 
 jobs:
   sonar:
-    runs-on: [self-hosted, Linux]
+    runs-on: [self-hosted, own-runner]
 
     steps:
       - name: Checkout code
