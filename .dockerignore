@@ -1,7 +1,5 @@
 .dockerignore
 npm-debug.log
-.scannerwork
-.env*
 Dockerfile*
 .git*
 node_modules
