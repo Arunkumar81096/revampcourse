@@ -1,7 +1,6 @@
 name : pull pipeline
 on:
-     pull_request:
-       branches : ["main"]
+     workflow_dispatch: 
 jobs:
      demo:
       runs-on : [self-hosted,Linux]
