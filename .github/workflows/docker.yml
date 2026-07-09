@@ -18,7 +18,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -f Dockerfile -t nodeapplication .
+        run: docker build -t nodeapplication .
 
       - name: Tag and Push Docker image
         run: |
