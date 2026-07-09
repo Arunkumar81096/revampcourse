@@ -17,15 +17,15 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Tag, build , Push Docker image
+      - name: Build and Push Docker image
         run: |
-          
           SHORT_SHA=${GITHUB_SHA::7}
-          IMAGE_NAME="${{ vars.DOCKERHUB_USERNAME }}/ak81096"
-          docker build -t $IMAGE_NAME:$SHORT_SHA -f dockerfile .
           
-          echo "Tagging image with tag: $SHORT_SHA"
-          docker tag dockerfile $IMAGE_NAME:$SHORT_SHA
+          # Force the image name to lowercase to keep Docker happy
+          IMAGE_NAME=$(echo "${{ vars.DOCKERHUB_USERNAME }}/ak81096" | tr '[:upper:]' '[:lower:]')
+          
+          echo "Building image: $IMAGE_NAME:$SHORT_SHA"
+          docker build -t $IMAGE_NAME:$SHORT_SHA -f Dockerfile .
           
           echo "Pushing image to Docker Hub..."
           docker push $IMAGE_NAME:$SHORT_SHA
