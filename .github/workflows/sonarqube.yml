@@ -16,7 +16,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: SonarQube analysis
-        uses: SonarSource/sonarqube-scan-action@v4
+        # Upgraded from v4 to v6 to address security vulnerability and Node deprecation
+        uses: SonarSource/sonarqube-scan-action@v6
         with:
           args: >
             -Dsonar.projectKey=NodeJS_App
