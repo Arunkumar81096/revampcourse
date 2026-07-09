@@ -19,6 +19,7 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v4
         with:
           args: >
+            -Dsonar-scanner -X
             -Dsonar.projectKey=NodeJS_App
             -Dsonar.sources=.
             -Dsonar.qualitygate.wait=true
