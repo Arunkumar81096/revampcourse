@@ -33,11 +33,11 @@ jobs:
     
     steps:
       - name: Clone code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4
 
-      # Uses the repository-level custom action syntax exactly as shown in the screenshot
-      - name: Login to Docker Hub
-        uses: arunkumar81096/featurebranch3/.github/actions/docker build and push@action
+      # Uses the clean, space-free action path structure
+      - name: Build and Push Docker Image via Composite Action
+        uses: Arunkumar81096/revampcourse/.github/actions/docker-build-push@featurebranch3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
