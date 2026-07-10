@@ -37,7 +37,7 @@ jobs:
 
       # Uses the repository-level custom action syntax exactly as shown in the screenshot
       - name: Login to Docker Hub
-        uses: arunkumar81096/revampcourse/.github/actions/docker-build-push@featurebranch3
+        uses: arunkumar81096/revampcourse/.github/actions/docker build and push@featurebranch3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
