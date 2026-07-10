@@ -1,0 +1,31 @@
+name: Docker Build Tag and Push
+description: Logs into DockerHub, builds a distroless image, and pushes it using a short SHA.
+
+inputs:
+  username:
+    description: Docker login username
+    required: true
+  password:
+    description: Docker login password
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Docker login
+      uses: docker/login-action@v3
+      with:
+        username: ${{ inputs.username }}
+        password: ${{ inputs.password }}
+
+    # 1. Build directly with your targeted Docker Hub repo format to keep it clean
+    - name: Build Docker image
+      shell: bash
+      run: |
+        docker build -f Dockerfile.distroless -t ${{ inputs.username }}/ak81096:${GITHUB_SHA::7} .
+
+    # 2. Push the image directly using inline shell slicing
+    - name: Push Image
+      shell: bash
+      run: |
+        docker push ${{ inputs.username }}/ak81096:${GITHUB_SHA::7}
