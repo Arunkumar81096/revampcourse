@@ -1,0 +1,27 @@
+name : with-id push
+on:
+    push:
+       branches:["main"]
+    Workflow_dispatch:
+jobs:
+    node:
+       runs on : [self-hosted,ubuntu-runner]
+       steps:
+         - name: clone-code
+           uses: actions/checkout@v7
+         - name: Set Short SHA
+           id : commit-tag
+           run:  echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+         - name: login to docker hub
+           uses: docker/login-action@v4
+           with:
+             username: ${{vars.DOCKERHUB_USRRNAME}}
+             password: ${{secrets.DOCKERHUB_TOKEN}}
+         - name: Build Docker image
+           run: docker build -t ${{ vars.DOCKERHUB_USERNAME }}/ak81096:${{steps.tag.outputs.sha}} .
+         - name : Tag docker image
+           run: |
+              docker tag dockerfile ${{vars.DOCKERHUB_USERNAME}}/ak81096:${{steps.tag.outputs.sha}}
+            name : push image
+            run : |
+               docker push ${{vars.DOCKERHUB_USERNAME}}/ak81096:${{steps.tag.outputs.sha}}
