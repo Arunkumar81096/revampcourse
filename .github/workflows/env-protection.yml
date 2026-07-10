@@ -1,6 +1,10 @@
-name: Pull and push
+name: Environment-protection
 on:
+  pull_request:
+    branches: ["main"]
   workflow_dispatch:
+  push:
+    branches: ["main"]
 
 jobs:
   Sonar_qube:
@@ -23,6 +27,7 @@ jobs:
 
   Docker:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment: prod
     runs-on: [self-hosted, ubuntu-runner]  # Adjusted to match your runner tag
     steps:
       - name: clone-code
