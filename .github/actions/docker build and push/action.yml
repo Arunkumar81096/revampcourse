@@ -28,10 +28,10 @@ runs:
     - name: Build Docker image
       shell: bash
       run: |
-        docker build -f Dockerfile -t ${{ inputs.username }}/nodeapp4:${{ steps.get_sha.outputs.sha }} .
+        docker build -f Dockerfile -t ${{ inputs.username }}/ak81096:${{ steps.get_sha.outputs.sha }} .
 
     # 3. Push the image cleanly without needing an intermediate local tag
     - name: Push Image
       shell: bash
       run: |
-        docker push ${{ inputs.username }}/nodeapp4:${{ steps.get_sha.outputs.sha }}
+        docker push ${{ inputs.username }}/ak81096:${{ steps.get_sha.outputs.sha }}
