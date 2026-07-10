@@ -20,11 +20,11 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v8
         with:
           args: >
-            -Dsonar.projectKey=NodeJS_App
-            -Dsonar.sources=.
-            -Dsonar.host.url=${{ vars.SONAR_HOST_URL }}
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-            -Dsonar.qualitygate.wait=true
+            sonar.projectKey=NodeJS_App
+            sonar.sources=.
+            sonar.host.url=${{ vars.SONAR_HOST_URL }}
+            sonar.login=${{ secrets.SONAR_TOKEN }}
+            sonar.qualitygate.wait=true
 
   docker:
     runs-on: [self-hosted, ubuntu-runner]
