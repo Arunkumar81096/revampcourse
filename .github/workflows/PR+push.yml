@@ -1,10 +1,6 @@
 name: Pull and push
 on:
-  pull_request:
-    branches: ["main"]
   workflow_dispatch:
-  push:
-    branches: ["main"]
 
 jobs:
   Sonar_qube:
