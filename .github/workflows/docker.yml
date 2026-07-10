@@ -11,21 +11,21 @@ jobs:
       - name: clone-code
         uses: actions/checkout@v4
 
-      - name: login to docker hub
+      - name: Set Short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          
+      # Make sure this block uses exactly 2 or 4 space indentation increments
+      - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
+          username: ak81096
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and Push Docker image
+          
+      - name: Build Docker Image
         run: |
-          SHORT_SHA=${GITHUB_SHA::7}
+          docker build -t ak81096/ak81096:$SHORT_SHA .
           
-          # Force the image name to lowercase to keep Docker happy
-          IMAGE_NAME=$(echo "${{ vars.DOCKERHUB_USERNAME }}/ak81096" | tr '[:upper:]' '[:lower:]')
-          
-          echo "Building image: $IMAGE_NAME:$SHORT_SHA"
-          docker build -t $IMAGE_NAME:$SHORT_SHA -f Dockerfile .
-          
-          echo "Pushing image to Docker Hub..."
-          docker push $IMAGE_NAME:$SHORT_SHA
+      # Ensure this step is aligned perfectly with the other '-' characters
+      - name: Push Image to Docker Hub
+        run: |
+          docker push ak81096/ak81096:$SHORT_SHA
