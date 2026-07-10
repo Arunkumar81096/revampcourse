@@ -1,0 +1,55 @@
+name: Environment-protection
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  Sonar_qube:
+    runs-on: [self-hosted, ubuntu-runner]
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: clone-code
+        uses: actions/checkout@v4
+
+      - name: sonarqube scan 
+        uses: sonarsource/sonarqube-scan-action@v5
+        with:
+          args: >
+            -Dsonar.projectKey=NodeJS_App
+            -Dsonar.sources=.
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+
+  Docker:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment: prod
+    runs-on: [self-hosted, ubuntu-runner]  # Adjusted to match your runner tag
+    steps:
+      - name: clone-code
+        uses: actions/checkout@v4
+
+      # 1. Generate the short SHA first so later steps can use it safely
+      - name: Generate Short SHA
+        id: get_sha
+        run: echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: login to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 2. Build directly with your targeted Docker Hub repo format
+      - name: Build Docker image
+        run: |
+          docker build -f Dockerfile -t ak81096/ak81096:${{ steps.get_sha.outputs.sha }} .
+
+      # 3. Push the image cleanly without needing an intermediate local tag
+      - name: push image
+        run: |
+          docker push ak81096/ak81096:${{ steps.get_sha.outputs.sha }}
