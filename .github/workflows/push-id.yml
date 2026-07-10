@@ -1,0 +1,33 @@
+name: push-id
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  node:
+    runs-on: [self-hosted, ubuntu-runner]
+    steps:
+      - name: clone-code
+        uses: actions/checkout@v4
+
+      # 1. Generate the short SHA first so it's ready for later steps
+      - name: Generate Short SHA
+        id: get_sha
+        run: echo "sha=${GITHUB_SHA::7}" >> "$GITHUB_OUTPUT"
+
+      - name: login to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 2. Build the image directly with your targeted Docker Hub repo path & tag
+      - name: Build Docker image
+        run: |
+          docker build -f Dockerfile -t ${{ vars.DOCKERHUB_USERNAME }}/ak81096:${{ steps.get_sha.outputs.sha }} .
+
+      # 3. Push the tagged image directly
+      - name: push image
+        run: |
+          docker push ${{ vars.DOCKERHUB_USERNAME }}/ak81096:${{ steps.get_sha.outputs.sha }}
