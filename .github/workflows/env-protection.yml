@@ -1,11 +1,6 @@
 name: Environment-protection
 on:
-  pull_request:
-    branches: ["main"]
   workflow_dispatch:
-  push:
-    branches: ["main"]
-
 jobs:
   Sonar_qube:
     runs-on: [self-hosted, ubuntu-runner]
