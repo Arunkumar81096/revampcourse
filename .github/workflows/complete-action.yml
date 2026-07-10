@@ -33,11 +33,11 @@ jobs:
     
     steps:
       - name: Clone code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v4  # Fixed: Changed from v7 to v4
 
-      # Uses the repository-level custom action syntax exactly as shown in the screenshot
-      - name: Login to Docker Hub
-        uses: arunkumar81096/revampcourse/.github/actions/docker-build-push@featurebranch3
+      # Uses the exact folder location from your screenshot, escaping spaces with %20
+      - name: Build and Push Docker Image via Composite Action
+        uses: Arunkumar81096/revampcourse/.github/actions/docker%20build%20and%20push@featurebranch3
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }} # Note: double check if you named your secret DOCKERHUB_TOKEN or DOCKERHUB_PASSWORD
