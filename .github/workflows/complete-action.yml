@@ -1,0 +1,43 @@
+name: pipeline_name
+
+on:
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  Sonar_qube:
+    runs-on: [self-hosted, ubuntu-runner]
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: clone-code
+        uses: actions/checkout@v4
+
+      - name: sonarqube scan 
+        uses: sonarsource/sonarqube-scan-action@v5
+        with:
+          args: >
+            -Dsonar.projectKey=NodeJS_App
+            -Dsonar.sources=.
+            -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+          
+  docker:
+    runs-on: [self-hosted, ubuntu-runner]
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    environment: prod
+    
+    steps:
+      - name: Clone code
+        uses: actions/checkout@v7
+
+      # Uses the repository-level custom action syntax exactly as shown in the screenshot
+      - name: Login to Docker Hub
+        uses: arunkumar81096/featurebranch3/.github/actions/docker build and push@action
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
