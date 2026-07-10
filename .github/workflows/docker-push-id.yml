@@ -1,11 +1,11 @@
-name : pipeline_name
+name : with-id push
 on:
     push:
        branches:["main"]
     Workflow_dispatch:
 jobs:
     node:
-       runs on : [self-hosted,anotheruniquename]
+       runs on : [self-hosted,ubuntu-runner]
        steps:
          - name: clone-code
            uses: actions/checkout@v7
