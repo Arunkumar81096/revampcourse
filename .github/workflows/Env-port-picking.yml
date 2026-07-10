@@ -1,0 +1,40 @@
+name : Dynamic run application
+on:
+    workflow_dispatch:
+      inputs:
+        environment:
+          Description: "choose which environment to use or deploy"
+          required: true
+          default: "development"
+          type: choice
+          options:
+            - "development"
+            - "production"
+            
+        port:
+          description: "choose which port you want"
+          required: true 
+          default: "8080"
+          type: choice 
+          options:
+            - "8080"
+            - "5000"
+jobs:
+    node:
+        runs-on : [self-hosted,ubuntu-runner]
+        steps:
+          - name: clone-code
+            uses: actions/checkout@v7
+          - name: node-install
+            uses: actions/setup-node@v6
+            with:
+              node-version: 20
+          - name: install_dependencies
+            run: npm install 
+          - name: run application 
+            run: |
+              node app.js ${{github.event.inputs.environment}} &
+              sleep 5
+              curl http://localhost:${{github.event.inputs.port}}
+              curl http://localhost:${{github.event.inputs.port}}/health
+              pkill -f "node app.js"
